@@ -105,25 +105,3 @@ FROM (
     FROM dbo.Orders
 ) AS RankedOrders
 WHERE rn = 1;
-
-
-
--- Tự kiểm tra (không nhìn tài liệu)
--- Viết lại 6 bước xử lý logic, nêu rõ DISTINCT và TOP nằm ở đâu.
--- Vì sao ROW_NUMBER() không được xuất hiện trong WHERE?
--- SELECT a + 1 AS x, x * 2 AS y – lỗi gì, vì sao?
--- Khác biệt giữa thứ tự logic và thứ tự vật lý? Xem thứ tự vật lý ở đâu?
--- Cho WHERE Qty <> 0 AND Total / Qty > 5 – có an toàn không?
-
--- 6 bước xử lý logic của SQL:
--- 1. FROM: Xác định các bảng và liên kết (joins) để lấy dữ liệu.
--- 2. WHERE: Lọc các bản ghi dựa trên điều kiện.    
--- 3. GROUP BY: Nhóm các bản ghi theo các cột được chỉ định.
--- 4. HAVING: Lọc các nhóm dữ liệu dựa trên điều kiện.
--- 5. SELECT: Chọn các cột hoặc biểu thức cần hiển thị trong kết quả.
--- 6. ORDER BY: Sắp xếp kết quả theo các cột hoặc biểu
--- thức được chỉ định. DISTINCT và TOP nằm trong bước SELECT, vì chúng ảnh hưởng đến các bản ghi được chọn và hiển thị.
--- ROW_NUMBER() không được xuất hiện trong WHERE vì nó là một hàm phân tích (analytic function) được tính toán sau khi các bản ghi đã được lọc và nhóm, do đó không thể sử dụng trong điều kiện WHERE.
--- SELECT a + 1 AS x, x * 2 AS y – lỗi vì alias x chưa được định nghĩa tại thời điểm y được tính toán, dẫn đến lỗi "invalid column name 'x'".
--- Thứ tự logic là thứ tự mà SQL Server xử lý các phần của câu lệnh SQL, trong khi thứ tự vật lý là thứ tự mà dữ liệu được lưu trữ và truy xuất từ cơ sở dữ liệu. Thứ tự vật lý có thể được xem thông qua các công cụ quản lý cơ sở dữ liệu hoặc bằng cách kiểm tra execution plan.
--- Cho WHERE Qty <> 0 AND Total / Qty > 5 – không an toàn vì nếu Qty bằng 0, phép chia Total / Qty sẽ gây ra lỗi chia cho 0. Cần đảm bảo rằng điều kiện Qty <> 0 được kiểm tra trước khi thực hiện phép chia để tránh lỗi.  
