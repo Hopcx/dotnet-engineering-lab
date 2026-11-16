@@ -2,7 +2,7 @@
  
 -- Q1 : Dự đoán chạy được ko gặp lỗi 
 SELECT CustomerId, OrderDate AS Ngay FROM dbo.Orders ORDER BY Ngay;
--- KQ_Q1 : Chạy ok, ko xảy ra lỗi, nhưng kết quả trả về sẽ không đúng vì trong câu lệnh ORDER BY đang sử dụng alias Ngay mà alias này chưa được định nghĩa trong SELECT.
+-- KQ_Q1 : Chạy được, không gặp lỗi
 -- Câu lệnh đúng sẽ là:
 SELECT CustomerId, OrderDate AS Ngay FROM dbo.Orders ORDER BY OrderDate;
 
@@ -105,3 +105,32 @@ FROM (
     FROM dbo.Orders
 ) AS RankedOrders
 WHERE rn = 1;
+
+
+-- 2 lỗi ở BT3:
+SELECT
+    CustomerId,
+    OrderId,
+    OrderDate,
+    ROW_NUMBER() OVER (
+        PARTITION BY CustomerId
+        ORDER BY OrderDate DESC
+    ) AS rn
+FROM dbo.Orders
+WHERE rn = 1;
+
+-- Msg 207, Level 16, State 1
+-- Invalid column name 'rn'.
+
+SELECT
+    CustomerId,
+    OrderId,
+    OrderDate
+FROM dbo.Orders
+WHERE ROW_NUMBER() OVER (
+    PARTITION BY CustomerId
+    ORDER BY OrderDate DESC
+) = 1;
+
+-- Msg 4108, Level 15, State 1
+-- Windowed functions can only appear in the SELECT or ORDER BY clauses.

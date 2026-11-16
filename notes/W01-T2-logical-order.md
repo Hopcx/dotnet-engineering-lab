@@ -29,8 +29,7 @@ So sánh với dự đoán notes/W01-du-doan.md hôm qua: Dự đoán đúng v�
 -- Thứ tự logic là thứ tự mà SQL Server xử lý các phần của câu lệnh SQL, trong khi thứ tự vật lý là thứ tự mà dữ liệu được lưu trữ và truy xuất từ cơ sở dữ liệu. Thứ tự vật lý có thể được xem thông qua các công cụ quản lý cơ sở dữ liệu hoặc bằng cách kiểm tra execution plan.
 -- Cho WHERE Qty <> 0 AND Total / Qty > 5 – không an toàn vì nếu Qty bằng 0, phép chia Total / Qty sẽ gây ra lỗi chia cho 0. Cần đảm bảo rằng điều kiện Qty <> 0 được kiểm tra trước khi thực hiện phép chia để tránh lỗi. 
 
-<!-- 
-Việc ngay bây giờ (≤ 20'): sửa 4 mục 🔴, viết lại câu hỏi mở, commit với nội dung fix: W01-T2 review, rồi báo thầy. Sửa đúng thì thầy chuyển hôm nay sang ✅ -->
+# Fix lần 1: viết lại câu hỏi mở, commit với nội dung fix: W01-T2 review
 
 
 
@@ -68,4 +67,12 @@ WHERE rn = 1;
 
 
 -- Câu hỏi mở : Làm thế nào để đảm bảo rằng kết quả của câu truy vấn luôn ổn định khi có nhiều bản ghi trùng nhau?
+
+
+# Fix lần 2: 
+Thứ tự vật lý (Physical Execution Order) là thứ tự các thao tác mà SQL Server thực sự thực hiện khi xử lý một câu truy vấn. Thứ tự này được Query Optimizer quyết định dựa trên Execution Plan, nhằm tối ưu hiệu năng và tài nguyên.
+
+Thứ tự thực thi vật lý không nhất thiết trùng với thứ tự xử lý logic. SQL Server có thể thay đổi thứ tự, kết hợp hoặc loại bỏ một số thao tác nếu vẫn bảo đảm kết quả truy vấn đúng theo ngữ nghĩa SQL.
+
+Có thể kiểm tra thứ tự thực thi vật lý bằng Actual Execution Plan trong SSMS (Ctrl + M trước khi chạy truy vấn).
 
