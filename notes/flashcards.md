@@ -1,0 +1,1 @@
+2 thẻ: “Msg 207 vs 4108” và “Không có ORDER BY = không có thứ tự”.
